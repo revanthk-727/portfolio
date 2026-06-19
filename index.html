@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ============================================================
+       INDEX.HTML - Startup Portfolio Website
+       ============================================================
+       This is the main HTML file that structures the entire website.
+       It includes:
+       - Home Page (hero, stats, services, featured, testimonials)
+       - About Page (story, mission, values, team, skills, timeline)
+       - Portfolio Page (searchable/filterable project gallery)
+       - Contact Page (form, info cards, social links)
+       - Footer (links, info, social)
+       - Modal (project detail popup)
+       
+       The site uses SPA (Single Page Application) routing.
+       All "pages" exist in this one file, and JavaScript
+       shows/hides them as the user navigates.
+       ============================================================ -->
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern startup portfolio built by young, ambitious founders. Showcasing innovative projects in web development, AI, mobile apps, and design.">
+  <title>NexaLabs — Young Founders Building the Future</title>
+  
+  <!-- Link to our external CSS file -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Favicon (using emoji as favicon via SVG data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN
+       ============================================================
+       Displays a spinner animation while the page loads.
+       Automatically hidden after 1.5 seconds by JavaScript.
+  -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loader"></div>
+    <span class="loading-text">Loading NexaLabs...</span>
+  </div>
+
+  <!-- ============================================================
+       CUSTOM CURSOR GLOW
+       ============================================================
+       A soft purple glow that follows the mouse cursor.
+       Only visible on desktop devices. Adds a futuristic feel.
+  -->
+  <div id="cursor-glow" class="cursor-glow"></div>
+
+  <!-- ============================================================
+       NAVIGATION BAR
+       ============================================================
+       Fixed at the top of the page. Uses glassmorphism on scroll.
+       Contains: Logo | Nav Links | Theme Toggle | Hamburger (mobile)
+  -->
+  <nav class="nav" id="navbar">
+    <div class="nav-container">
+      
+      <!-- Logo / Brand Name -->
+      <a class="nav-logo" data-target="home" style="cursor:pointer;">
+        🚀 NexaLabs
+      </a>
+      
+      <!-- Desktop Navigation Links -->
+      <div class="nav-links" id="nav-links">
+        <a class="nav-link active" data-target="home">Home</a>
+        <a class="nav-link" data-target="about">About</a>
+        <a class="nav-link" data-target="portfolio">Portfolio</a>
+        <a class="nav-link" data-target="contact">Contact</a>
+      </div>
+      
+      <!-- Right Side Controls -->
+      <div class="nav-controls">
+        <!-- Dark/Light Mode Toggle Button -->
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+        
+        <!-- Hamburger Menu (visible on mobile only) -->
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MOBILE MENU OVERLAY
+       ============================================================
+       Full-screen overlay menu for mobile devices.
+       Opens when the hamburger icon is clicked.
+  -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a class="nav-link" data-target="home">Home</a>
+    <a class="nav-link" data-target="about">About</a>
+    <a class="nav-link" data-target="portfolio">Portfolio</a>
+    <a class="nav-link" data-target="contact">Contact</a>
+  </div>
+
+  <!-- ================================================================
+       ================================================================
+       PAGE 1: HOME
+       ================================================================
+       ================================================================
+       The landing page visitors see first.
+       Designed to make a powerful first impression.
+  -->
+  <div class="page active" data-page="home">
+
+    <!-- ============================================================
+         HERO SECTION
+         ============================================================
+         Full viewport height section with:
+         - Animated gradient background orbs
+         - Dot grid pattern overlay
+         - Badge, headline, subtitle, and CTA buttons
+    -->
+    <section class="hero-section" id="hero">
+      <!-- Animated background orbs (decorative) -->
+      <div class="hero-bg-orb"></div>
+      <div class="hero-bg-orb"></div>
+      <div class="hero-bg-orb"></div>
+      
+      <!-- Grid pattern overlay -->
+      <div class="hero-grid"></div>
+      
+      <!-- Hero content -->
+      <div class="hero-content">
+        <!-- Status badge -->
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Currently building amazing things
+        </div>
+        
+        <!-- Main headline with gradient text -->
+        <h1 class="hero-title">
+          We Build <span class="gradient-text">Digital Products</span> That Matter
+        </h1>
+        
+        <!-- Subtitle description -->
+        <p class="hero-subtitle">
+          A team of teenage founders crafting innovative software, stunning designs, and AI-powered solutions. We're not waiting for the future — we're building it.
+        </p>
+        
+        <!-- Call to Action buttons -->
+        <div class="hero-buttons">
+          <a class="btn-primary" data-target="portfolio" style="cursor:pointer;">
+            View Our Work →
+          </a>
+          <a class="btn-outline" data-target="contact" style="cursor:pointer;">
+            Get In Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         STATISTICS SECTION
+         ============================================================
+         Displays key achievements in a 4-column grid.
+         Numbers animate counting up when scrolled into view.
+         
+         data-count: The target number to count up to
+         data-suffix: Text appended after the number ("+", "K", etc.)
+    -->
+    <section class="stats-section section" id="stats">
+      <div class="container">
+        <div class="stats-grid">
+          
+          <div class="stat-card reveal">
+            <div class="stat-number" data-count="50" data-suffix="+">0</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          
+          <div class="stat-card reveal">
+            <div class="stat-number" data-count="30" data-suffix="+">0</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          
+          <div class="stat-card reveal">
+            <div class="stat-number" data-count="4" data-suffix="">0</div>
+            <div class="stat-label">Team Members</div>
+          </div>
+          
+          <div class="stat-card reveal">
+            <div class="stat-number" data-count="3" data-suffix="+">0</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICES SECTION
+         ============================================================
+         What the startup team offers. 6 service cards in a 3x2 grid.
+         Each card has an icon, title, and description.
+    -->
+    <section class="services-section section" id="services">
+      <div class="container">
+        
+        <!-- Section header -->
+        <div class="section-header reveal">
+          <span class="section-label">What We Do</span>
+          <h2 class="section-title">Our <span class="gradient-text">Services</span></h2>
+          <p class="section-subtitle">From concept to deployment, we handle everything your digital product needs.</p>
+        </div>
+        
+        <!-- Services grid -->
+        <div class="services-grid">
+          
+          <div class="service-card reveal">
+            <div class="service-icon">🌐</div>
+            <h3 class="service-title">Web Development</h3>
+            <p class="service-description">Custom websites and web applications built with modern frameworks. Fast, responsive, and beautiful.</p>
+          </div>
+          
+          <div class="service-card reveal">
+            <div class="service-icon">📱</div>
+            <h3 class="service-title">Mobile Apps</h3>
+            <p class="service-description">Cross-platform mobile applications for iOS and Android. Native performance with beautiful UI.</p>
+          </div>
+          
+          <div class="service-card reveal">
+            <div class="service-icon">🎨</div>
+            <h3 class="service-title">UI/UX Design</h3>
+            <p class="service-description">User-centered design that converts. From wireframes to polished prototypes and design systems.</p>
+          </div>
+          
+          <div class="service-card reveal">
+            <div class="service-icon">🤖</div>
+            <h3 class="service-title">AI & Machine Learning</h3>
+            <p class="service-description">Intelligent solutions powered by cutting-edge AI. Automation, chatbots, and predictive analytics.</p>
+          </div>
+          
+          <div class="service-card reveal">
+            <div class="service-icon">☁️</div>
+            <h3 class="service-title">Cloud & DevOps</h3>
+            <p class="service-description">Scalable cloud infrastructure and CI/CD pipelines. Deploy with confidence and scale without limits.</p>
+          </div>
+          
+          <div class="service-card reveal">
+            <div class="service-icon">🔒</div>
+            <h3 class="service-title">Cybersecurity</h3>
+            <p class="service-description">Security-first development practices. Penetration testing, code audits, and secure architectures.</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURED PROJECTS PREVIEW
+         ============================================================
+         Shows 3 highlighted projects on the home page.
+         Links to the full portfolio page for more.
+    -->
+    <section class="featured-section section" id="featured">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="section-label">Featured Work</span>
+          <h2 class="section-title">Recent <span class="gradient-text">Projects</span></h2>
+          <p class="section-subtitle">A glimpse of what we've been building. Click to explore our full portfolio.</p>
+        </div>
+        
+        <div class="featured-grid">
+          
+          <!-- Featured Project 1 -->
+          <div class="featured-card reveal">
+            <div class="featured-image">
+              <div class="project-image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#1a1a2e,#2d1b69,#4c1d95);">🤖</div>
+              <div class="featured-overlay">
+                <span class="featured-overlay-text">View Project</span>
+              </div>
+            </div>
+            <div class="featured-info">
+              <span class="featured-category">AI/ML</span>
+              <h3 class="featured-title">NexusAI Platform</h3>
+              <p class="featured-desc">AI-powered workflow automation platform for modern startups with real-time collaboration.</p>
+            </div>
+          </div>
+          
+          <!-- Featured Project 2 -->
+          <div class="featured-card reveal">
+            <div class="featured-image">
+              <div class="project-image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#1a1a2e,#2d1b69,#4c1d95);">🛒</div>
+              <div class="featured-overlay">
+                <span class="featured-overlay-text">View Project</span>
+              </div>
+            </div>
+            <div class="featured-info">
+              <span class="featured-category">Web Development</span>
+              <h3 class="featured-title">ShopFlow Commerce</h3>
+              <p class="featured-desc">Modern e-commerce platform with AI-powered recommendations and lightning-fast performance.</p>
+            </div>
+          </div>
+          
+          <!-- Featured Project 3 -->
+          <div class="featured-card reveal">
+            <div class="featured-image">
+              <div class="project-image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#1a1a2e,#2d1b69,#4c1d95);">💪</div>
+              <div class="featured-overlay">
+                <span class="featured-overlay-text">View Project</span>
+              </div>
+            </div>
+            <div class="featured-info">
+              <span class="featured-category">Mobile App</span>
+              <h3 class="featured-title">FitPulse App</h3>
+              <p class="featured-desc">Cross-platform fitness app with AI personal training and wearable device integration.</p>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- CTA to full portfolio -->
+        <div class="featured-cta reveal">
+          <a class="btn-primary" data-target="portfolio" style="cursor:pointer;">
+            View All Projects →
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIALS SECTION
+         ============================================================
+         What clients and partners say about the team.
+         3 testimonial cards with quotes and author info.
+    -->
+    <section class="testimonials-section section" id="testimonials">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="section-label">Testimonials</span>
+          <h2 class="section-title">What People <span class="gradient-text">Say</span></h2>
+          <p class="section-subtitle">Feedback from clients and collaborators who've worked with us.</p>
+        </div>
+        
+        <div class="testimonials-grid">
+          
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">These young founders delivered a product that exceeded our expectations. Their energy, creativity, and technical skills are truly impressive. They're going to be huge.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JD</div>
+              <div>
+                <div class="testimonial-name">James Donovan</div>
+                <div class="testimonial-role">CEO, TechStart Inc.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Working with NexaLabs felt like working with a top-tier agency, not a team of teenagers. The attention to detail and modern design sense was outstanding.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">SR</div>
+              <div>
+                <div class="testimonial-name">Sarah Robinson</div>
+                <div class="testimonial-role">Founder, DesignHub</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">They built our entire platform from scratch in record time. The codebase was clean, well-documented, and the final product was pixel-perfect. Highly recommended.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MK</div>
+              <div>
+                <div class="testimonial-name">Michael Kim</div>
+                <div class="testimonial-role">CTO, DataVerse</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- END OF HOME PAGE -->
+
+
+  <!-- ================================================================
+       ================================================================
+       PAGE 2: ABOUT
+       ================================================================
+       ================================================================
+       Tells the team's story, mission, vision, values,
+       showcases team members, skills, and journey timeline.
+  -->
+  <div class="page" data-page="about">
+
+    <!-- ============================================================
+         ABOUT HERO
+         ============================================================
+    -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">About Us</span>
+          <h1 class="section-title">We're <span class="gradient-text">Young Builders</span> on a Mission</h1>
+          <p class="section-subtitle">A team of teenage founders who believe age is just a number when it comes to innovation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPANY STORY SECTION
+         ============================================================
+         Our origin story with text and decorative image.
+    -->
+    <section class="story-section section">
+      <div class="container">
+        <div class="story-grid">
+          
+          <div class="story-content reveal">
+            <h3>Our <span class="gradient-text">Story</span></h3>
+            <p>NexaLabs started in 2024 as a group of high school friends who loved building things. While our classmates were scrolling social media, we were writing code, designing interfaces, and dreaming about startups.</p>
+            <p>What began as weekend side projects quickly grew into something real. Our first client came through a friend's recommendation, and from there, word spread. We've since worked with startups, small businesses, and even enterprise clients who value fresh perspectives and cutting-edge technology.</p>
+            <p>Today, we're a team of four passionate creators who prove every day that you don't need a corner office or a business degree to build world-class digital products. You just need vision, skills, and an unstoppable drive to create.</p>
+          </div>
+          
+          <div class="story-image reveal">
+            <span class="story-image-placeholder">🚀</span>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MISSION & VISION SECTION
+         ============================================================
+         Two cards side by side for mission and vision statements.
+    -->
+    <section class="mission-section section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Our Purpose</span>
+          <h2 class="section-title">Mission & <span class="gradient-text">Vision</span></h2>
+        </div>
+        
+        <div class="mission-grid">
+          
+          <div class="mission-card reveal">
+            <div class="mission-icon">🎯</div>
+            <h3>Our Mission</h3>
+            <p>To democratize access to premium digital solutions by leveraging young talent and fresh perspectives. We believe great software should be accessible to everyone, and the best ideas can come from anywhere — including a teenager's bedroom desk.</p>
+          </div>
+          
+          <div class="mission-card reveal">
+            <div class="mission-icon">🔭</div>
+            <h3>Our Vision</h3>
+            <p>To become the go-to studio for innovative digital products built by the next generation of creators. We envision a world where young entrepreneurs are taken seriously, and where creativity and code can change lives at any age.</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CORE VALUES SECTION
+         ============================================================
+         Four value cards showing what the team stands for.
+    -->
+    <section class="values-section section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">What Drives Us</span>
+          <h2 class="section-title">Core <span class="gradient-text">Values</span></h2>
+        </div>
+        
+        <div class="values-grid">
+          
+          <div class="value-card reveal">
+            <div class="value-icon">💡</div>
+            <h4>Innovation First</h4>
+            <p>We push boundaries and embrace new technologies. If there's a better way to do it, we'll find it.</p>
+          </div>
+          
+          <div class="value-card reveal">
+            <div class="value-icon">🤝</div>
+            <h4>Radical Transparency</h4>
+            <p>No corporate BS. We communicate openly with clients and each other. Trust is built on honesty.</p>
+          </div>
+          
+          <div class="value-card reveal">
+            <div class="value-icon">⚡</div>
+            <h4>Ship Fast</h4>
+            <p>We believe in rapid iteration. Launch, learn, improve. Perfect is the enemy of done.</p>
+          </div>
+          
+          <div class="value-card reveal">
+            <div class="value-icon">🌍</div>
+            <h4>Impact Driven</h4>
+            <p>Every project should make a difference. We build things that solve real problems for real people.</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TEAM SECTION
+         ============================================================
+         Team member cards generated dynamically by JavaScript.
+         Edit the teamMembers array in script.js to modify.
+    -->
+    <section class="team-section section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">The Crew</span>
+          <h2 class="section-title">Meet the <span class="gradient-text">Team</span></h2>
+          <p class="section-subtitle">Young, talented, and building things that matter.</p>
+        </div>
+        
+        <!-- Team cards are injected here by JavaScript -->
+        <div class="team-grid" id="team-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SKILLS SECTION
+         ============================================================
+         Animated progress bars showing team competencies.
+         data-width attribute controls the bar fill percentage.
+    -->
+    <section class="skills-section section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Our Stack</span>
+          <h2 class="section-title">Skills & <span class="gradient-text">Technologies</span></h2>
+        </div>
+        
+        <div class="skills-grid">
+          
+          <!-- Frontend Skills -->
+          <div class="skill-category reveal">
+            <h4>🎨 Frontend</h4>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">HTML / CSS</span>
+                <span class="skill-percent">95%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="95"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-percent">92%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="92"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">React / Next.js</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="88"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Tailwind CSS</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="90"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Backend Skills -->
+          <div class="skill-category reveal">
+            <h4>⚙️ Backend</h4>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Node.js</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="90"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Python</span>
+                <span class="skill-percent">87%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="87"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">PostgreSQL / MongoDB</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="85"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">GraphQL / REST APIs</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="88"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Other Skills -->
+          <div class="skill-category reveal">
+            <h4>🚀 Tools & More</h4>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Figma / Design</span>
+                <span class="skill-percent">91%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="91"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Git / GitHub</span>
+                <span class="skill-percent">93%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="93"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Docker / Cloud</span>
+                <span class="skill-percent">80%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="80"></div>
+              </div>
+            </div>
+            
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">AI / Machine Learning</span>
+                <span class="skill-percent">82%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="82"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TIMELINE / JOURNEY SECTION
+         ============================================================
+         A vertical timeline showing key milestones.
+         Alternates left and right for visual interest.
+    -->
+    <section class="timeline-section section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Our Journey</span>
+          <h2 class="section-title">The <span class="gradient-text">Timeline</span></h2>
+        </div>
+        
+        <div class="timeline">
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">January 2024</span>
+              <h4>The Spark ✨</h4>
+              <p>Four friends start coding together on weekends. The idea for NexaLabs is born during a late-night brainstorming session.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">April 2024</span>
+              <h4>First Client 🎉</h4>
+              <p>We land our first paying client through a friend's recommendation. A local business website that turns out amazing.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">August 2024</span>
+              <h4>Going Serious 🚀</h4>
+              <p>NexaLabs officially launches. We set up our online presence and start taking on larger projects.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">January 2025</span>
+              <h4>AI Breakthrough 🤖</h4>
+              <p>We dive into AI/ML and build our first intelligent platform. This opens doors to exciting new opportunities.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">June 2025</span>
+              <h4>50 Projects Milestone 🏆</h4>
+              <p>We hit 50 completed projects with clients across 5 countries. The team continues growing and learning.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal">
+            <div class="timeline-content">
+              <span class="timeline-date">2026</span>
+              <h4>The Future 🌟</h4>
+              <p>Building bigger, dreaming bigger. We're just getting started. The best is yet to come.</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- END OF ABOUT PAGE -->
+
+
+  <!-- ================================================================
+       ================================================================
+       PAGE 3: PORTFOLIO
+       ================================================================
+       ================================================================
+       The centerpiece of the website. Features:
+       - Search bar for real-time project searching
+       - Category filter buttons (auto-generated)
+       - Project cards grid (dynamically rendered)
+       - Click any card to see full details in a modal
+       
+       Projects are managed in script.js via the projects array.
+       See script.js for instructions on adding new projects.
+  -->
+  <div class="page" data-page="portfolio">
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Our Work</span>
+          <h1 class="section-title">Project <span class="gradient-text">Portfolio</span></h1>
+          <p class="section-subtitle">Explore our case studies and see the products we've built. Each project is a story of innovation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Controls & Grid -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        
+        <!-- Search & Filter Controls -->
+        <div class="portfolio-controls reveal">
+          
+          <!-- Search Input -->
+          <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="project-search" 
+              class="search-input" 
+              placeholder="Search projects by name, tech, or description..."
+            >
+          </div>
+          
+          <!-- Filter Buttons (auto-generated by JavaScript) -->
+          <div class="filter-buttons" id="filter-buttons">
+            <!-- Buttons are dynamically created in script.js -->
+          </div>
+          
+        </div>
+        
+        <!-- Projects Grid (cards are dynamically generated by JavaScript) -->
+        <div class="projects-grid" id="projects-grid">
+          <!-- Project cards are injected here by renderProjects() -->
+        </div>
+        
+      </div>
+    </section>
+
+  </div>
+  <!-- END OF PORTFOLIO PAGE -->
+
+
+  <!-- ================================================================
+       ================================================================
+       PAGE 4: CONTACT
+       ================================================================
+       ================================================================
+       Contact form with validation, info cards, and social links.
+  -->
+  <div class="page" data-page="contact">
+
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Contact Us</span>
+          <h1 class="section-title">Let's <span class="gradient-text">Connect</span></h1>
+          <p class="section-subtitle">Have a project in mind? Want to collaborate? We'd love to hear from you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        
+        <div class="contact-cards">
+          
+          <div class="contact-card reveal">
+            <div class="contact-card-icon">📧</div>
+            <h4>Email Us</h4>
+            <p>hello@nexalabs.com</p>
+          </div>
+          
+          <div class="contact-card reveal">
+            <div class="contact-card-icon">📍</div>
+            <h4>Location</h4>
+            <p>Remote — Worldwide</p>
+          </div>
+          
+          <div class="contact-card reveal">
+            <div class="contact-card-icon">⏰</div>
+            <h4>Response Time</h4>
+            <p>Within 24 hours</p>
+          </div>
+          
+        </div>
+        
+        <!-- Contact Form + Info Panel -->
+        <div class="contact-form-section">
+          
+          <!-- Left: Contact Form -->
+          <form class="contact-form reveal" id="contact-form" novalidate>
+            
+            <div class="form-group">
+              <label class="form-label" for="contact-name">Your Name</label>
+              <input type="text" id="contact-name" class="form-input" placeholder="John Doe">
+              <span class="form-error">Please enter your name</span>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" class="form-input" placeholder="john@example.com">
+              <span class="form-error">Please enter a valid email</span>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" class="form-input" placeholder="Project Inquiry">
+              <span class="form-error">Please enter a subject</span>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="contact-message">Your Message</label>
+              <textarea id="contact-message" class="form-textarea" placeholder="Tell us about your project, idea, or question..." rows="6"></textarea>
+              <span class="form-error">Please enter a message (at least 10 characters)</span>
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+              Send Message 🚀
+            </button>
+            
+            <!-- Success message shown after valid submission -->
+            <div class="form-success" id="form-success">
+              ✅ Message sent successfully! We'll get back to you within 24 hours.
+            </div>
+            
+          </form>
+          
+          <!-- Right: Contact Info Panel -->
+          <div class="contact-info reveal">
+            <h3>Let's Build Something <span class="gradient-text">Amazing</span></h3>
+            <p>Whether you have a detailed project brief or just a rough idea, we're here to help bring it to life. No project is too small or too ambitious for our team.</p>
+            <p>We typically respond within 24 hours and are happy to set up a free consultation call to discuss your needs.</p>
+            
+            <div style="margin-top: 24px;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Working Hours</h4>
+              <p style="font-size: 0.85rem;">Monday - Saturday: 9AM - 9PM (Flexible)</p>
+              <p style="font-size: 0.85rem;">Sunday: Available for urgent requests</p>
+            </div>
+            
+            <!-- Social Media Links -->
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; margin-top: 24px;">Follow Us</h4>
+              <div class="social-links">
+                <a href="#" class="social-link" title="Twitter / X" target="_blank">𝕏</a>
+                <a href="#" class="social-link" title="GitHub" target="_blank">⌨</a>
+                <a href="#" class="social-link" title="LinkedIn" target="_blank">in</a>
+                <a href="#" class="social-link" title="Instagram" target="_blank">📷</a>
+                <a href="#" class="social-link" title="YouTube" target="_blank">▶</a>
+              </div>
+            </div>
+            
+            <!-- Map Placeholder -->
+            <div class="map-placeholder">
+              🌍 We work remotely from around the world
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- END OF CONTACT PAGE -->
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================
+       Appears at the bottom of every page.
+       Contains links, company info, and social links.
+  -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Footer Column 1: Brand Info -->
+        <div>
+          <span class="footer-logo">🚀 NexaLabs</span>
+          <p class="footer-description">A team of teenage founders building premium digital products. We're proving that age is just a number in the world of tech and innovation.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" title="Twitter / X">𝕏</a>
+            <a href="#" class="social-link" title="GitHub">⌨</a>
+            <a href="#" class="social-link" title="LinkedIn">in</a>
+          </div>
+        </div>
+        
+        <!-- Footer Column 2: Quick Links -->
+        <div>
+          <h4 class="footer-heading">Quick Links</h4>
+          <a class="footer-link nav-link" data-target="home" style="cursor:pointer;">Home</a>
+          <a class="footer-link nav-link" data-target="about" style="cursor:pointer;">About Us</a>
+          <a class="footer-link nav-link" data-target="portfolio" style="cursor:pointer;">Portfolio</a>
+          <a class="footer-link nav-link" data-target="contact" style="cursor:pointer;">Contact</a>
+        </div>
+        
+        <!-- Footer Column 3: Services -->
+        <div>
+          <h4 class="footer-heading">Services</h4>
+          <span class="footer-link">Web Development</span>
+          <span class="footer-link">Mobile Apps</span>
+          <span class="footer-link">UI/UX Design</span>
+          <span class="footer-link">AI Solutions</span>
+        </div>
+        
+        <!-- Footer Column 4: Contact Info -->
+        <div>
+          <h4 class="footer-heading">Contact</h4>
+          <span class="footer-link">📧 hello@nexalabs.com</span>
+          <span class="footer-link">📍 Remote — Worldwide</span>
+          <span class="footer-link">⏰ Mon - Sat, 9-9</span>
+        </div>
+        
+      </div>
+      
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <p>© 2026 NexaLabs. All rights reserved. Built with ❤️ by teenage founders.</p>
+        <p>Designed & Developed by NexaLabs Team</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       PROJECT DETAIL MODAL
+       ============================================================
+       A popup overlay that shows full project details.
+       Opens when a project card is clicked.
+       Content is filled dynamically by JavaScript.
+  -->
+  <div class="modal-overlay" id="project-modal">
+    <div class="modal-content">
+      
+      <!-- Close Button -->
+      <button class="modal-close" onclick="closeProjectModal()">✕</button>
+      
+      <!-- Modal Image (filled by JS) -->
+      <div class="modal-image">
+        <!-- Image or placeholder injected here -->
+      </div>
+      
+      <!-- Modal Body (filled by JS) -->
+      <div class="modal-body">
+        <span class="modal-category">Category</span>
+        <h2 class="modal-title">Project Title</h2>
+        <p class="modal-date">Date</p>
+        <p class="modal-description">Description</p>
+        <div class="modal-techs">
+          <!-- Tech tags injected here -->
+        </div>
+        <div class="modal-actions">
+          <a class="btn-primary modal-demo-btn" href="#" target="_blank">
+            🔗 Live Demo
+          </a>
+          <a class="btn-outline modal-github-btn" href="#" target="_blank">
+            💻 View Code
+          </a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       BACK TO TOP BUTTON
+       ============================================================
+       Floating button at bottom-right.
+       Appears when scrolled down 500px.
+       Smoothly scrolls to the top when clicked.
+  -->
+  <button class="back-to-top" id="back-to-top" title="Back to top">
+    ↑
+  </button>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================
+       Link to our external JavaScript file.
+       This must be at the bottom of the body so the HTML
+       elements exist before the JS tries to access them.
+  -->
+  <script src="script.js"></script>
+
+</body>
+</html>

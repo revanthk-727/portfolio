@@ -1,0 +1,2485 @@
+/* ============================================================
+   STYLE.CSS - Complete Stylesheet for Startup Portfolio
+   ============================================================
+   
+   TABLE OF CONTENTS:
+   1.  CSS Variables (Color Palette & Design Tokens)
+   2.  Reset & Base Styles
+   3.  Custom Scrollbar
+   4.  Loading Screen
+   5.  Custom Cursor
+   6.  Navigation Bar
+   7.  Mobile Menu
+   8.  Hero Section
+   9.  Statistics Section
+   10. Services Section
+   11. Featured Projects Preview
+   12. Testimonials Section
+   13. About Page Sections
+   14. Portfolio Page Sections
+   15. Contact Page Sections
+   16. Footer
+   17. Back to Top Button
+   18. Dark/Light Mode
+   19. Modal Styles
+   20. Utility Classes & Animations
+   21. Responsive Design (Tablet & Mobile)
+   
+   HOW TO CUSTOMIZE COLORS:
+   - Change the CSS variables in :root below
+   - --primary is the main dark background
+   - --secondary is your brand purple
+   - --accent is the lighter purple for highlights
+   - All colors throughout the site use these variables
+   ============================================================ */
+
+/* ===========================================
+   1. CSS VARIABLES - Design Tokens
+   ===========================================
+   These variables control the entire color scheme.
+   Change these values to rebrand the whole site instantly.
+*/
+:root {
+  /* ---- Brand Colors ---- */
+  --primary: #0A0A0A;          /* Deep black - main background */
+  --secondary: #7C3AED;        /* Rich purple - brand color */
+  --accent: #A855F7;           /* Lighter purple - accents & hovers */
+  --white: #FFFFFF;            /* Pure white - text on dark */
+  --light-gray: #E5E7EB;      /* Light gray - subtle text */
+  --dark-gray: #1F1F1F;       /* Dark gray - card backgrounds */
+  --text-muted: #9CA3AF;      /* Muted text color */
+  
+  /* ---- Glassmorphism Colors ---- */
+  --glass-bg: rgba(255, 255, 255, 0.05);      /* Glass card background */
+  --glass-border: rgba(255, 255, 255, 0.1);   /* Glass card border */
+  --glass-bg-hover: rgba(255, 255, 255, 0.08); /* Glass hover state */
+  
+  /* ---- Gradients ---- */
+  --gradient-primary: linear-gradient(135deg, #7C3AED, #A855F7);
+  --gradient-bg: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #0A0A0A 100%);
+  --gradient-text: linear-gradient(135deg, #7C3AED, #A855F7, #C084FC);
+  
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 2px 10px rgba(124, 58, 237, 0.1);
+  --shadow-md: 0 4px 20px rgba(124, 58, 237, 0.15);
+  --shadow-lg: 0 8px 40px rgba(124, 58, 237, 0.2);
+  --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.3);
+  
+  /* ---- Typography ---- */
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* ---- Spacing ---- */
+  --section-padding: 100px 0;
+  --container-width: 1200px;
+  --border-radius: 16px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 24px;
+  
+  /* ---- Transitions ---- */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-spring: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ===========================================
+   LIGHT MODE OVERRIDES
+   ===========================================
+   When [data-theme="light"] is on <body>,
+   these variables override the dark defaults.
+*/
+[data-theme="light"] {
+  --primary: #F9FAFB;
+  --dark-gray: #F3F4F6;
+  --white: #111827;
+  --light-gray: #374151;
+  --text-muted: #6B7280;
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-bg-hover: rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.1);
+  --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #EDE9FE 50%, #F9FAFB 100%);
+}
+
+/* Light mode specific element overrides */
+[data-theme="light"] .nav {
+  background: rgba(249, 250, 251, 0.9);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .hero-section {
+  background: linear-gradient(135deg, #F9FAFB 0%, #EDE9FE 30%, #F5F3FF 60%, #F9FAFB 100%);
+}
+
+[data-theme="light"] .stat-card,
+[data-theme="light"] .service-card,
+[data-theme="light"] .project-card,
+[data-theme="light"] .testimonial-card,
+[data-theme="light"] .value-card,
+[data-theme="light"] .team-card,
+[data-theme="light"] .contact-card,
+[data-theme="light"] .timeline-content,
+[data-theme="light"] .skill-category {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .footer {
+  background: #111827;
+  color: #E5E7EB;
+}
+[data-theme="light"] .footer .footer-description,
+[data-theme="light"] .footer .footer-link,
+[data-theme="light"] .footer .footer-bottom p {
+  color: #9CA3AF;
+}
+[data-theme="light"] .footer .footer-heading,
+[data-theme="light"] .footer .footer-logo {
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .modal-content {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #111827 !important;
+}
+
+/* ===========================================
+   2. RESET & BASE STYLES
+   ===========================================
+   Remove default browser styling and set
+   a consistent base for our design.
+*/
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Universal box-sizing reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base font size - 1rem = 16px */
+}
+
+/* Body base styles */
+body {
+  font-family: var(--font-main);
+  background-color: var(--primary);
+  color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden; /* Prevent horizontal scroll from animations */
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Remove default link styling */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+/* Remove default list styling */
+ul, ol {
+  list-style: none;
+}
+
+/* Make images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove default button styling */
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: none;
+}
+
+/* Default input styling */
+input, textarea, select {
+  font-family: inherit;
+  outline: none;
+}
+
+/* Reusable container - centers content with max width */
+.container {
+  width: 90%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section base padding */
+.section {
+  padding: var(--section-padding);
+  position: relative;
+}
+
+/* ===========================================
+   3. CUSTOM SCROLLBAR
+   ===========================================
+   A themed scrollbar that matches our brand.
+*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ===========================================
+   4. LOADING SCREEN
+   ===========================================
+   Full-screen loading animation shown on page load.
+   Uses a spinning gradient ring and pulsing text.
+*/
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000; /* Above everything */
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* When loading is done, fade it out */
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Spinning ring loader */
+.loader {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid rgba(124, 58, 237, 0.2);
+  border-top-color: var(--secondary);
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 20px;
+}
+
+/* Pulsing loading text */
+.loading-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ===========================================
+   5. CUSTOM CURSOR (Optional Effect)
+   ===========================================
+   A glowing dot that follows the mouse.
+   Creates a futuristic, interactive feel.
+*/
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  /* Radial gradient creates a soft purple glow */
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+  pointer-events: none; /* Don't block clicks */
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Hidden by default, shown via JS */
+}
+
+/* ===========================================
+   6. NAVIGATION BAR
+   ===========================================
+   Fixed navbar with glassmorphism effect.
+   Changes appearance on scroll (adds backdrop blur).
+*/
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 0;
+  z-index: 1000;
+  transition: all var(--transition-normal);
+  border-bottom: 1px solid transparent;
+}
+
+/* Scrolled state - adds glass effect */
+.nav.scrolled {
+  padding: 12px 0;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--glass-border);
+}
+
+[data-theme="light"] .nav.scrolled {
+  background: rgba(249, 250, 251, 0.85);
+}
+
+/* Flex container for nav items */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Logo / Brand name */
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Individual nav link */
+.nav-link {
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--white);
+  background: var(--glass-bg);
+}
+
+/* Active nav link styling */
+.nav-link.active {
+  color: var(--white);
+  background: var(--gradient-primary);
+}
+
+/* Right side nav controls (theme toggle + mobile hamburger) */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--white);
+  font-size: 1.1rem;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--secondary);
+  transform: rotate(30deg);
+}
+
+/* ===========================================
+   7. MOBILE MENU (Hamburger)
+   ===========================================
+   Hidden on desktop, shown on mobile.
+   Animated hamburger icon transforms to X.
+*/
+.hamburger {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+/* Individual hamburger lines */
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all var(--transition-normal);
+  transform-origin: center;
+}
+
+/* When menu is open, transform to X */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(5px) translateX(5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-5px) translateX(5px);
+}
+
+/* Mobile menu overlay */
+.mobile-menu {
+  display: none; /* JS controls this */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(10, 10, 10, 0.97);
+  backdrop-filter: blur(30px);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.mobile-menu.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Mobile menu links - larger for touch */
+.mobile-menu .nav-link {
+  font-size: 1.4rem;
+  padding: 14px 30px;
+}
+
+/* ===========================================
+   8. HERO SECTION
+   ===========================================
+   The first thing visitors see.
+   Full viewport height with animated background.
+*/
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 30%, #0e0e1a 60%, #0A0A0A 100%);
+}
+
+/* Animated gradient orbs in the background */
+.hero-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero-bg-orb:nth-child(1) {
+  width: 500px;
+  height: 500px;
+  background: var(--secondary);
+  top: -150px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.hero-bg-orb:nth-child(2) {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  bottom: -100px;
+  left: -100px;
+  animation-delay: -3s;
+}
+
+.hero-bg-orb:nth-child(3) {
+  width: 300px;
+  height: 300px;
+  background: #6D28D9;
+  top: 50%;
+  left: 50%;
+  animation-delay: -5s;
+}
+
+/* Grid pattern overlay for texture */
+.hero-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Creates a subtle dot grid pattern */
+  background-image: radial-gradient(rgba(124, 58, 237, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+}
+
+/* Hero content wrapper */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+/* Small badge above the headline */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 30px;
+  animation: fadeInDown 0.8s ease;
+}
+
+/* Pulsing dot in the badge */
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Main hero headline */
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); /* Responsive font size */
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -2px;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* Gradient text effect for specific words */
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero subtitle/description */
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+/* Hero buttons container */
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+/* ===========================================
+   BUTTON STYLES (Global)
+   ===========================================
+   Two button variants: primary (filled) and outline.
+*/
+
+/* Primary filled button with gradient */
+.btn-primary {
+  padding: 14px 32px;
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Shine effect on hover */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Outline/ghost button */
+.btn-outline {
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline:hover {
+  background: var(--glass-bg);
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+/* Small button variant */
+.btn-sm {
+  padding: 10px 22px;
+  font-size: 0.85rem;
+}
+
+/* ===========================================
+   SECTION HEADER (Reusable)
+   ===========================================
+   Consistent section title styling used
+   across all sections of the website.
+*/
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===========================================
+   9. STATISTICS SECTION
+   ===========================================
+   Displays key numbers/stats in a grid.
+   Uses glassmorphism cards with hover effects.
+*/
+.stats-section {
+  padding: 60px 0;
+  position: relative;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 24px;
+}
+
+/* Individual stat card */
+.stat-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 36px 24px;
+  text-align: center;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient top border on hover */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+.stat-card:hover::before {
+  transform: scaleX(1);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  background: var(--glass-bg-hover);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+/* Large stat number */
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+/* Stat description text */
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ===========================================
+   10. SERVICES SECTION
+   ===========================================
+   Grid of service cards showing what the team offers.
+*/
+.services-section {
+  padding: var(--section-padding);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 24px;
+}
+
+/* Individual service card */
+.service-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 40px 30px;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  /* Group hover - child elements react */
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  background: var(--glass-bg-hover);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+/* Gradient accent on the left side */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+/* Service icon container */
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(124, 58, 237, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  transition: all var(--transition-normal);
+}
+
+.service-card:hover .service-icon {
+  background: var(--gradient-primary);
+  transform: scale(1.1);
+}
+
+.service-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.service-description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ===========================================
+   11. FEATURED PROJECTS PREVIEW
+   ===========================================
+   Shows a few projects on the home page
+   with a link to the full portfolio.
+*/
+.featured-section {
+  padding: var(--section-padding);
+  background: var(--dark-gray);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Featured project card */
+.featured-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.featured-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+/* Project image container */
+.featured-image {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.featured-card:hover .featured-image img {
+  transform: scale(1.1);
+}
+
+/* Overlay that appears on hover */
+.featured-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(124, 58, 237, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.featured-card:hover .featured-overlay {
+  opacity: 1;
+}
+
+.featured-overlay-text {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 24px;
+  border: 2px solid white;
+  border-radius: 50px;
+}
+
+/* Project info below the image */
+.featured-info {
+  padding: 24px;
+}
+
+.featured-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.featured-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.featured-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.featured-cta {
+  text-align: center;
+}
+
+/* ===========================================
+   12. TESTIMONIALS SECTION
+   ===========================================
+   Client/partner testimonials in a card grid.
+*/
+.testimonials-section {
+  padding: var(--section-padding);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 36px;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+/* Large quote mark */
+.testimonial-quote {
+  font-size: 3rem;
+  color: var(--secondary);
+  line-height: 1;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.testimonial-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* Author info at bottom of card */
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.testimonial-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   13. ABOUT PAGE SECTIONS
+   ===========================================
+   Includes: Story, Mission/Vision, Values,
+   Team, Skills, and Timeline sections.
+*/
+
+/* ---- About Hero ---- */
+.about-hero {
+  padding: 160px 0 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ---- Company Story ---- */
+.story-section {
+  padding: var(--section-padding);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.story-content h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.story-content p {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+/* Decorative image placeholder */
+.story-image {
+  position: relative;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-image-placeholder {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+/* ---- Mission & Vision Cards ---- */
+.mission-section {
+  padding: var(--section-padding);
+  background: var(--dark-gray);
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.mission-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 48px;
+  transition: all var(--transition-normal);
+}
+
+.mission-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.mission-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.mission-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.mission-card p {
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* ---- Core Values Grid ---- */
+.values-section {
+  padding: var(--section-padding);
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.value-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 32px 24px;
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.value-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.value-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ---- Team Section ---- */
+.team-section {
+  padding: var(--section-padding);
+  background: var(--dark-gray);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.team-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 36px 24px;
+  text-align: center;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+/* Team member avatar circle */
+.team-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 auto 20px;
+  transition: transform var(--transition-normal);
+}
+
+.team-card:hover .team-avatar {
+  transform: scale(1.1);
+}
+
+.team-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.team-role {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.team-bio {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Team member social links */
+.team-socials {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.team-social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: all var(--transition-normal);
+  color: var(--text-muted);
+}
+
+.team-social-link:hover {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ---- Skills Section ---- */
+.skills-section {
+  padding: var(--section-padding);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.skill-category {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 36px;
+  transition: all var(--transition-normal);
+}
+
+.skill-category:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.skill-category h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+/* Individual skill bar */
+.skill-item {
+  margin-bottom: 18px;
+}
+
+.skill-item:last-child {
+  margin-bottom: 0;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.skill-name {
+  font-weight: 500;
+}
+
+.skill-percent {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Skill progress bar track */
+.skill-bar {
+  height: 6px;
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+/* Skill progress bar fill - width set via inline style */
+.skill-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+  width: 0; /* Animated via JS */
+  transition: width 1.5s ease;
+}
+
+/* ---- Timeline / Journey Section ---- */
+.timeline-section {
+  padding: var(--section-padding);
+  background: var(--dark-gray);
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Vertical line running down the center */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+/* Alternating left/right alignment */
+.timeline-item:nth-child(odd) {
+  justify-content: flex-start;
+  padding-right: calc(50% + 30px);
+}
+
+.timeline-item:nth-child(even) {
+  justify-content: flex-end;
+  padding-left: calc(50% + 30px);
+}
+
+/* Dot on the timeline line */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: var(--secondary);
+  border-radius: 50%;
+  border: 3px solid var(--dark-gray);
+  z-index: 1;
+  top: 20px;
+}
+
+/* Timeline card content */
+.timeline-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  transition: all var(--transition-normal);
+  width: 100%;
+}
+
+.timeline-content:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  transform: translateY(-3px);
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.timeline-content h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.timeline-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ===========================================
+   14. PORTFOLIO PAGE SECTIONS
+   ===========================================
+   The main portfolio with filtering, search,
+   and project cards. This is the CENTERPIECE.
+*/
+
+/* Portfolio hero */
+.portfolio-hero {
+  padding: 160px 0 60px;
+  text-align: center;
+  position: relative;
+}
+
+/* Search and filter controls */
+.portfolio-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+/* Search bar */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 50px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  color: var(--white);
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* Search icon */
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* Category filter buttons */
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 10px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.filter-btn:hover {
+  color: var(--white);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.filter-btn.active {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: transparent;
+}
+
+/* Projects grid layout */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Individual project card */
+.project-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  /* For the slide-in animation */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: cardAppear 0.6s ease forwards;
+}
+
+/* Stagger card animations */
+.project-card:nth-child(1) { animation-delay: 0.05s; }
+.project-card:nth-child(2) { animation-delay: 0.1s; }
+.project-card:nth-child(3) { animation-delay: 0.15s; }
+.project-card:nth-child(4) { animation-delay: 0.2s; }
+.project-card:nth-child(5) { animation-delay: 0.25s; }
+.project-card:nth-child(6) { animation-delay: 0.3s; }
+.project-card:nth-child(7) { animation-delay: 0.35s; }
+.project-card:nth-child(8) { animation-delay: 0.4s; }
+.project-card:nth-child(9) { animation-delay: 0.45s; }
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+/* Project image area */
+.project-image {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.1);
+}
+
+/* Gradient color placeholder when no image */
+.project-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: linear-gradient(135deg, #1a1a2e, #2d1b69, #4c1d95);
+}
+
+/* Hover overlay on project image */
+.project-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 10, 0.9) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.project-card:hover .project-image-overlay {
+  opacity: 1;
+}
+
+.project-overlay-text {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Category badge on the card */
+.project-category-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  background: rgba(124, 58, 237, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Project info section */
+.project-info {
+  padding: 24px;
+}
+
+.project-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.project-description {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  /* Truncate long descriptions to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Technology tags */
+.project-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tech-tag {
+  padding: 4px 12px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* Project card footer with links */
+.project-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.project-link:hover {
+  color: var(--accent);
+}
+
+.project-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* No results message */
+.no-results {
+  grid-column: 1 / -1; /* Span full width */
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-results h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+/* ===========================================
+   15. CONTACT PAGE SECTIONS
+   ===========================================
+   Contact form, info cards, and social links.
+*/
+
+/* Contact hero */
+.contact-hero {
+  padding: 160px 0 60px;
+  text-align: center;
+}
+
+/* Contact cards row */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.contact-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  padding: 36px;
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.contact-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin: 0 auto 16px;
+}
+
+.contact-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.contact-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Contact form layout */
+.contact-form-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form input group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.form-input,
+.form-textarea {
+  padding: 14px 18px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  color: var(--white);
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Form validation error state */
+.form-group.error .form-input,
+.form-group.error .form-textarea {
+  border-color: #EF4444;
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: #EF4444;
+  display: none;
+}
+
+.form-group.error .form-error {
+  display: block;
+}
+
+/* Form success message */
+.form-success {
+  display: none;
+  padding: 16px 24px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: var(--border-radius-sm);
+  color: #22C55E;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.form-success.show {
+  display: block;
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Contact info side panel */
+.contact-info {
+  padding: 40px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+}
+
+.contact-info h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.contact-info p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+/* Social media links */
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.social-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+  color: var(--text-muted);
+}
+
+.social-link:hover {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* Map placeholder */
+.map-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   16. FOOTER
+   ===========================================
+   Comprehensive footer with links and info.
+*/
+.footer {
+  padding: 60px 0 20px;
+  background: var(--dark-gray);
+  border-top: 1px solid var(--glass-border);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.footer-description {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.footer-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--white);
+}
+
+.footer-link {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--accent);
+}
+
+/* Footer bottom bar */
+.footer-bottom {
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   17. BACK TO TOP BUTTON
+   ===========================================
+   Fixed button that appears when scrolled down.
+*/
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 900;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ===========================================
+   19. MODAL STYLES
+   ===========================================
+   Full-screen overlay modal for project details.
+*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--dark-gray);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition-spring);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal close button */
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--white);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Modal project image */
+.modal-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  background: linear-gradient(135deg, #1a1a2e, #2d1b69, #4c1d95);
+}
+
+/* Modal body content */
+.modal-body {
+  padding: 36px;
+}
+
+.modal-category {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.modal-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.modal-description {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.modal-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.modal-tech-tag {
+  padding: 6px 16px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* Modal action buttons */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Hide page sections - SPA routing */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* ===========================================
+   20. UTILITY CLASSES & ANIMATIONS
+   ===========================================
+*/
+
+/* Scroll-triggered reveal animation class */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Keyframe Animations */
+
+/* Spin animation for loading spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse animation for glowing elements */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Floating animation for background orbs */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* Fade in from below */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in from above */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card appear animation for project grid */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gradient shift for animated backgrounds */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===========================================
+   21. RESPONSIVE DESIGN
+   ===========================================
+   Breakpoints:
+   - 1024px: Tablet landscape
+   - 768px:  Tablet portrait
+   - 480px:  Mobile
+*/
+
+/* ---- Tablet Landscape (max 1024px) ---- */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .featured-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-form-section { grid-template-columns: 1fr; }
+}
+
+/* ---- Tablet Portrait (max 768px) ---- */
+@media (max-width: 768px) {
+  /* Show hamburger, hide desktop nav */
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  
+  /* Adjust hero text size */
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: -1px;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Stack grids to single column */
+  .story-grid { grid-template-columns: 1fr; gap: 30px; }
+  .mission-grid { grid-template-columns: 1fr; }
+  .contact-cards { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  
+  /* Footer bottom stack */
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  /* Timeline - single column */
+  .timeline::before {
+    left: 20px;
+  }
+  
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    padding-left: 50px;
+    padding-right: 0;
+    justify-content: flex-start;
+  }
+  
+  .timeline-item::before {
+    left: 20px;
+  }
+
+  .testimonials-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Mobile (max 480px) ---- */
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  
+  .section { padding: 60px 0; }
+  .container { padding: 0 12px; }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .btn-primary, .btn-outline {
+    padding: 12px 24px;
+    font-size: 0.88rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .modal-content {
+    border-radius: var(--border-radius);
+  }
+  .modal-image {
+    height: 200px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  }
+  .modal-body { padding: 24px; }
+  .modal-title { font-size: 1.4rem; }
+  .modal-actions { flex-direction: column; }
+  .modal-actions .btn-primary,
+  .modal-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-buttons { gap: 6px; }
+  .filter-btn { padding: 8px 16px; font-size: 0.78rem; }
+}
+
+/* ===========================================
+   END OF STYLESHEET
+   ===========================================
+   This CSS file controls the entire visual
+   appearance of the portfolio website.
+   
+   To customize:
+   1. Change CSS variables in :root for colors
+   2. Adjust --border-radius for rounded corners
+   3. Modify animations by changing @keyframes
+   4. Update breakpoints for different devices
+   =========================================== */
